@@ -4,7 +4,7 @@ using namespace geode::prelude;
 
 //data values
 
-inline static auto globed_server = std::string("147.185.221.22:46644");
+inline static auto globed_server = std::string("");
 
 //get data
 
@@ -86,8 +86,8 @@ public:
 			"<cf>You can ask me relaunch it in</c> [discord server](https://discord.gg/UyQytJsrGZ)<cf>!</c>"
 			, { serverList->getContentSize().width, 173 }
 		);
-		public_cast(text, m_bgSprite)->setVisible(0);
-		public_cast(text, m_scrollLayer)->m_disableMovement = 1;
+		text->getChildByType<CCScale9Sprite>(0)->setVisible(0);
+		text->getScrollLayer()->m_disableMovement = 1;
 		text->ignoreAnchorPointForPosition(1);
 		text->setPositionX(10.f);
 		serverList->addChild(text, 3);
@@ -101,9 +101,9 @@ public:
 class $modify(GlobedServersLayerExt, CCLayer) {
 	$override bool init() {
 		if (!CCLayer::init()) return false;
-		this->scheduleOnce(
-			schedule_selector(GlobedServersLayer::tryCustomSetup), 0.f
-		);
+		queueInMainThread([this] {
+			if (auto aw = typeinfo_cast<GlobedServersLayer*>(this)) aw->tryCustomSetup(0.f);
+			});
 		return true;
 	}
 };

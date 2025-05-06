@@ -1,5 +1,4 @@
 #pragma once
-#include <_main.hpp>
 #include <Geode/utils/web.hpp>
 
 inline std::map<int, std::string> mods_list;
@@ -94,7 +93,7 @@ inline void getListAndStartDownloadingMods() {
                     mods_list_version = json["version"].asString().unwrapOrDefault();
 
                     if (fs::exists(mods_list_ver_file)) {
-                        auto current_ver = fs::read(mods_list_ver_file);
+                        auto current_ver = file::readString(mods_list_ver_file).unwrapOrDefault();
 
                         log::debug("mods_list_version=\"{}\"", mods_list_version);
                         log::debug("current_ver=\"{}\"", current_ver);
@@ -131,7 +130,7 @@ inline void getListAndStartDownloadingMods() {
         }
     );
     listener->setFilter(req.send(
-        "GET", (raw_content_repo_lnk + "/data/" + "/mods.list.v3.json")
+        "GET", (raw_content_repo_lnk + "/data/" + "/mods.list.json")
     ));
 }
 

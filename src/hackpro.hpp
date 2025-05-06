@@ -1,5 +1,4 @@
 #pragma once
-#include <_main.hpp>
 
 #include <Geode/modify/GameManager.hpp>
 class $modify(IconHackExt, GameManager) {
